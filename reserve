@@ -1,0 +1,45 @@
+
+for (let i of products.data) {
+    let card = document.createElement("div");
+    card.classList.add("product-item", i.category.toLowerCase().replace(" ", "-"));
+
+    let imgContainer = document.createElement("div");
+    imgContainer.classList.add("image-container");
+
+    let image = document.createElement("img");
+    image.setAttribute("src", i.image);
+    imgContainer.appendChild(image);
+    card.appendChild(imgContainer);
+
+    let productName = document.createElement("h3");
+    productName.innerText = i.productName;
+    card.appendChild(productName);
+
+    let productPrice = document.createElement("p");
+    productPrice.innerText = `$${i.price}`;
+    card.appendChild(productPrice);
+
+    document.getElementById("products").appendChild(card);
+}
+function filterProducts(category) {
+    let cards = document.querySelectorAll(".product-item");
+    cards.forEach(card => {
+        card.style.display = "block";
+        if (category !== "All" && !card.classList.contains(category.toLowerCase().replace(" ", "-"))) {
+            card.style.display = "none";
+        }
+    });
+}
+
+
+document.querySelectorAll(".button-value").forEach(button => {
+    button.addEventListener("click", () => {
+        filterProducts(button.innerText);
+        document.querySelectorAll(".button-value").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+    });
+});
+
+filterProducts("All");
+
+
